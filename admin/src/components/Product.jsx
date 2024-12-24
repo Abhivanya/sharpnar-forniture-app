@@ -8,6 +8,8 @@ const Product = ({ productId, productDetails }) => {
   const { removeProduct, updateProduct } = useContext(ProductContext);
   const { isOutofStock } = productDetails;
 
+  let imageURL = `../../public/images/${productDetails.images}`;
+
   const handleUpdate = () => {
     navigate(`/updateproduct/${productId}`);
   };
@@ -19,11 +21,15 @@ const Product = ({ productId, productDetails }) => {
           Product Out of stock
         </h1>
       )}
-      <img
-        src={sampleImg}
-        alt="bg Image"
-        className="w-[100px] object-contain"
-      />
+
+      <div className="w-[150px]  mx-auto">
+        <img
+          src={imageURL}
+          alt="Not found"
+          className="w-[110px] object-fill h-[100px]"
+        />
+      </div>
+
       <div className="w-[90%] flex flex-col gap-1">
         <span className="text-[14px] line-clamp-1">{productDetails.name}</span>
         <span className="line-clamp-1 text-[12px]">

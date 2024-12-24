@@ -8,7 +8,7 @@ const UpdateProduct = () => {
   const { updateProduct } = useContext(ProductContext);
   const { productId } = useParams();
 
-  const submitForm = (name, desc, category, price, quantity, imgUrl) => {
+  const submitForm = (name, desc, category, price, quantity, image) => {
     const isOutofStock = quantity == 0;
     const updatedProduct = {
       name,
@@ -17,7 +17,7 @@ const UpdateProduct = () => {
       price,
       quantity,
       isOutofStock,
-      images: [imgUrl],
+      images: image,
     };
     updateProduct(productId, updatedProduct);
   };
@@ -27,7 +27,7 @@ const UpdateProduct = () => {
       className="bg-gray-400 min-h-[85vh] rounded-md  mt-[100px] p-3 md:p-0 "
     >
       <h1 className="mx-auto text-center text-3xl text-blue-600 font-bold underline underline-offset-4">
-        New Product
+        Update Product
       </h1>
 
       <ProductForm

@@ -32,7 +32,7 @@ const ProductForm = ({ submitForm, isUpdate, productId }) => {
           categoryRef.current.value = res.category;
           priceRef.current.value = res.price;
           quantityRef.current.value = res.quantity;
-          setOldImage(res.images[0]);
+          setOldImage(res.images);
         })
         .catch((err) => {
           console.error(err);
@@ -42,8 +42,11 @@ const ProductForm = ({ submitForm, isUpdate, productId }) => {
   }, [isUpdate, productId]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (image !== null) {
-      setOldImage(image);
+    let newImage;
+    if (image) {
+      newImage = image;
+    } else {
+      newImage = oldImage;
     }
     submitForm(
       nameRef.current.value,
@@ -51,7 +54,7 @@ const ProductForm = ({ submitForm, isUpdate, productId }) => {
       categoryRef.current.value,
       priceRef.current.value,
       quantityRef.current.value,
-      oldImage
+      newImage
     );
     e.target.reset();
     setImage(null);
@@ -61,8 +64,7 @@ const ProductForm = ({ submitForm, isUpdate, productId }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setImage(file.name);
     }
   };
 
@@ -142,13 +144,17 @@ const ProductForm = ({ submitForm, isUpdate, productId }) => {
         <Form.Label className="font-bold w-[30%] md:w-[10%]">
           Upload Image
         </Form.Label>
-        <Form.Control
-          className="md:w-[225px]"
-          type="file"
-          accept="image/*"
-          required={isUpdate ? false : true}
-          onChange={handleImageChange}
-        />
+        <div>
+          {isUpdate && <span className="ml-3 text-[12px]">{oldImage}</span>}
+          <Form.Control
+            className="md:w-[225px]"
+            type="file"
+            accept="image/*"
+            placeholder={isUpdate && oldImage}
+            required={isUpdate ? false : true}
+            onChange={handleImageChange}
+          />
+        </div>
       </Form.Group>
 
       <Button type="submit" className="w-[50%] mx-auto my-3">

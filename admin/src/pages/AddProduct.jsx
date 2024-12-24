@@ -5,7 +5,7 @@ import ProductContext from "../store/productContext";
 
 const AddProduct = () => {
   const { addProduct } = useContext(ProductContext);
-  const submitForm = (name, desc, category, price, quantity, imgUrl) => {
+  const submitForm = (name, desc, category, price, quantity, image) => {
     const isOutofStock = quantity == 0;
     const newProduct = {
       name,
@@ -14,7 +14,7 @@ const AddProduct = () => {
       price,
       quantity,
       isOutofStock,
-      images: [imgUrl],
+      images: image,
     };
     addProduct(newProduct);
   };
