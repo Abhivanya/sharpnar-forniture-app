@@ -40,13 +40,7 @@ const App = () => {
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/address" element={<Address />} />
       </Routes>
-      <button
-        onClick={() => {
-          dispatch(getCartItems());
-        }}
-      >
-        Fetch
-      </button>
+
       <Footer />
     </>
   );

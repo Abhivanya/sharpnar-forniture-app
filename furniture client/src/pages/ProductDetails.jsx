@@ -33,7 +33,7 @@ const ProductDetails = () => {
         });
     };
     fetchProduct();
-  }, []);
+  }, [productId]);
   const image = `../../public/images/${product.images}`;
 
   const addProductToCart = () => {

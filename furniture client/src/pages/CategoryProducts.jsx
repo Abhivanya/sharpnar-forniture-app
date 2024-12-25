@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ProductList from "../components/ProductList";
+import ProductCard from "../components/ProductCard";
 
 const CategoryProducts = () => {
   const { category } = useParams();
   const [products, setProducts] = useState({});
+  const [filteredResults, setFilteredResults] = useState([]);
+
   useEffect(() => {
     const fetchProduct = () => {
       fetch(
@@ -20,7 +23,6 @@ const CategoryProducts = () => {
           if (res.error) {
             throw new Error(res.error);
           }
-          console.log(res);
           setProducts(res);
         })
         .catch((err) => {
@@ -29,26 +31,36 @@ const CategoryProducts = () => {
         });
     };
     fetchProduct();
-  }, []);
 
-  let filteredProducts = {};
-  if (Object.entries(products).length > 0) {
-    filteredProducts = Object.fromEntries(
-      Object.entries(products).filter(
-        ([key, value]) => value.category === category
-      )
-    );
-  }
+    if (category) {
+      if (Object.entries(products).length < 1) return;
+      const results = Object.entries(products).filter(([key, item]) =>
+        item.category.toLowerCase().includes(category)
+      );
 
-  console.log(filteredProducts);
+      setFilteredResults(results);
+      console.log(results);
+    } else {
+      setFilteredResults([]);
+    }
+  }, [category]);
 
   return (
     <Container fluid className=" rounded-md mt-[80px] p-0">
-      <Container fluid className="bg-white p-0">
-        <ProductList
-          products={filteredProducts}
-          label={category.toUpperCase()}
-        />
+      <Container fluid="md" className="bg-white  rounded-md mt-[100px] p-4">
+        <h1 className="text-2xl text-black  ml-4  border-b-2 py-3 font-bold">
+          {category}
+        </h1>
+
+        {filteredResults.length > 0 ? (
+          <div className="flex flex-wrap p-4">
+            {filteredResults.map(([key, value]) => (
+              <ProductCard item={value} key={key} productId={key} />
+            ))}
+          </div>
+        ) : (
+          <p>No item found</p>
+        )}
       </Container>
     </Container>
   );

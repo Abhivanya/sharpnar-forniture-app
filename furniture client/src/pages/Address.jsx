@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearCartItems, getCartItems } from "../store/cartActions";
+import { clearCartItems } from "../store/cartActions";
 const Address = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [fetchAddress, setFetchAddress] = useState(false);
@@ -105,25 +105,14 @@ const Address = () => {
       const { email } = JSON.parse(localStorage.getItem("forniture-app"));
       const emailId = email.replace(".", "_");
 
-      const response1 = await fetch(
-        `https://furniture-app-5c355-default-rtdb.firebaseio.com/${emailId}/order.json`,
-        {
-          method: "POST",
-          body: JSON.stringify({ order: cartItems, amount: totalAmount }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const response2 = await fetch(
-        `https://furniture-app-5c355-default-rtdb.firebaseio.com/orders.json`,
+      const response = await fetch(
+        `https://furniture-app-5c355-default-rtdb.firebaseio.com/order/${emailId}.json`,
         {
           method: "POST",
           body: JSON.stringify({
             order: cartItems,
             amount: totalAmount,
-            custmerEmail: email,
-            custmerEmailId: emailId,
+            status: "Orderd",
           }),
           headers: {
             "Content-Type": "application/json",
@@ -131,14 +120,11 @@ const Address = () => {
         }
       );
 
-      if (!response1.ok) {
-        throw new Error("Failed to place Order");
-      }
-      if (!response2.ok) {
+      if (!response.ok) {
         throw new Error("Failed to place Order to Seller");
       }
 
-      const res = await response1.json();
+      const res = await response.json();
       console.log(res);
 
       dispatch(clearCartItems());

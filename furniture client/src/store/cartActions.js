@@ -146,11 +146,11 @@ export const clearCartItems = () => {
         }
 
         const res = await response.json();
-        dispatch(cartActions.cleanCart());
       } catch (err) {
         console.error("Error Cleaning cart items:", err.message);
       }
     };
     emptyCart();
+    dispatch(cartActions.cleanCart());
   };
 };

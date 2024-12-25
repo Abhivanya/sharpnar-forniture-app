@@ -3,8 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import CartItem from "../components/CartItem";
 import OrderItem from "../components/OrderItem";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getCartItems } from "../store/cartActions";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [isCart, setIsCart] = useState(true);
@@ -13,12 +12,7 @@ const Cart = () => {
   const totalCount = useSelector((state) => state.cart.totalCount);
   console.log(cartItems);
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCartItems());
-  }, [dispatch, location]);
   const handleOrder = () => {
     if (totalCount > 0) {
       navigate("/address");

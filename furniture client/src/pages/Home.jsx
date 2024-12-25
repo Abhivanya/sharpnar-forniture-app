@@ -59,7 +59,7 @@ const Home = () => {
         </Carousel>
       </Container>
       <Category />
-      <ProductList products={products} />
+      <ProductList products={products} label="All Product" />
     </Container>
   );
 };
