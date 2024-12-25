@@ -43,7 +43,7 @@ const CategoryProducts = () => {
     } else {
       setFilteredResults([]);
     }
-  }, [category]);
+  }, [category, products]);
 
   return (
     <Container fluid className=" rounded-md mt-[80px] p-0">
@@ -53,7 +53,7 @@ const CategoryProducts = () => {
         </h1>
 
         {filteredResults.length > 0 ? (
-          <div className="flex flex-wrap p-4">
+          <div className="flex flex-wrap p-4 gap-4  justify-evenly">
             {filteredResults.map(([key, value]) => (
               <ProductCard item={value} key={key} productId={key} />
             ))}

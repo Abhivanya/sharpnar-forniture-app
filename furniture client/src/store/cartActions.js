@@ -17,6 +17,8 @@ export const getCartItems = () => {
       const res = await response.json();
       if (res) {
         dispatch(cartActions.replaceCart(res));
+      } else {
+        dispatch(cartActions.replaceCart({}));
       }
     } catch (err) {
       console.error("Error fetching cart items:", err.message);
@@ -121,7 +123,7 @@ export const removeCartItem = (cartItems, itemId) => {
         );
       }
 
-      dispatch(getCartItems());
+      await dispatch(getCartItems());
     } catch (err) {
       console.error("Error removing/updating cart item:", err.message);
     }

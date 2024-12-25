@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import img from "../components/almira.jpg";
+import { useSelector } from "react-redux";
 const OrderItem = () => {
   const [orders, setOrders] = useState({});
   useEffect(() => {
@@ -40,7 +41,11 @@ const OrderItem = () => {
               )}
               <div className="pl-3">
                 Status :{" "}
-                <span className="mx-4 text-white bg-green-600 px-3 py-1 rounded-full">
+                <span
+                  className={`${
+                    value.status !== "cancel" ? "bg-green-600" : "bg-red-600"
+                  } mx-4 text-white  px-3 py-1 rounded-full`}
+                >
                   {value.status}
                 </span>
                 Total Amount :
@@ -73,12 +78,12 @@ const OrderCard = ({ order, orderId }) => {
         <div>
           <h3 className="font-bold line-clamp-1">{order.name} </h3>
           <p className="line-clamp-1">{order.description}</p>
-          <span>Total Quantity : {order.cartQuantity}</span>
+          <span>Total Quantity : Rs {order.cartQuantity}</span>
         </div>
       </header>
       <div className=" w-[30%] p-2 flex flex-col justify-center items-center">
         <div className="flex justify-evenly p-1 text-[18px] w-full flex-col">
-          Price : {order.price}
+          Price : Rs {order.price}
         </div>
 
         {/* <button

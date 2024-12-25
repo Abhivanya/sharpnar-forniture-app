@@ -16,10 +16,12 @@ const cartSlice = createSlice({
       state.totalAmount = 0;
       state.totalCount = 0;
 
-      Object.values(state.cartItems).forEach((item) => {
-        state.totalAmount += item.price * item.cartQuantity;
-        state.totalCount += item.cartQuantity;
-      });
+      if (Object.entries(state.cartItems).length > 0) {
+        Object.values(state.cartItems).forEach((item) => {
+          state.totalAmount += item.price * item.cartQuantity;
+          state.totalCount += item.cartQuantity;
+        });
+      }
     },
     cleanCart(state) {
       state.cartItems = {};

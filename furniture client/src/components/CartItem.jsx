@@ -1,13 +1,19 @@
 import React from "react";
 import img from "../components/almira.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem, removeCartItem } from "../store/cartActions";
+import {
+  addCartItem,
+  getCartItems,
+  removeCartItem,
+} from "../store/cartActions";
+import { useNavigate } from "react-router-dom";
 
 ("../../public");
 const CartItem = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalCount = useSelector((state) => state.cart.totalCount);
+  const navigate = useNavigate();
   const increaseCartItem = (item, stock) => {
     if (item.cartQuantity > stock) {
     }
@@ -32,12 +38,12 @@ const CartItem = () => {
               <div>
                 <h3 className="font-bold line-clamp-1">{item.name}</h3>
                 <p className="line-clamp-1">{item.description}</p>
-                <p>Product Price : {item.price}</p>
+                <p>Product Price : Rs {item.price}</p>
               </div>
             </header>
             <div className=" w-[25%] flex flex-col justify-center items-center">
               <div className="flex justify-evenly p-2 text-[18px] w-full">
-                Price : {item.price * item.cartQuantity}
+                Price : Rs {item.price * item.cartQuantity}
                 <div className="text-red-800">
                   x <span>{item.cartQuantity}</span>
                 </div>

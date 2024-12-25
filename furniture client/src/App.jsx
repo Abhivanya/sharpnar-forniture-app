@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import Home from "./pages/Home";
@@ -34,11 +34,22 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/loginsignup" element={<LoginSignup />} />
+        <Route
+          path="/cart"
+          element={
+            isLoggedIn ? <Cart /> : <Navigate to="/loginsignup" replace />
+          }
+        />
+        <Route
+          path="/loginsignup"
+          element={!isLoggedIn ? <LoginSignup /> : <Navigate to="/" replace />}
+        />
         <Route path="/category/:category" element={<CategoryProducts />} />
         <Route path="/product/:productId" element={<ProductDetails />} />
-        <Route path="/address" element={<Address />} />
+        <Route
+          path="/address"
+          element={isLoggedIn ? <Address /> : <Navigate to="/" replace />}
+        />
       </Routes>
 
       <Footer />
